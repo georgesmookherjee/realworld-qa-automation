@@ -1,0 +1,81 @@
+# Pas de version needed avec Docker Compose v2
+
+services:
+  # Base de données PostgreSQL
+  database:
+    image: postgres:15-alpine
+    container_name: realworld-db
+    environment:
+      POSTGRES_DB: realworld
+      POSTGRES_USER: realworld
+      POSTGRES_PASSWORD: realworld123
+    ports:
+      - "5433:5432"  # Port 5433 externe pour éviter conflit avec jira-postgres
+    volumes:
+      # Persist data même après arrêt du container
+      - postgres_data:/var/lib/postgresql/data
+      # Scripts d'initialisation (optionnel)
+      - ./database/init:/docker-entrypoint-initdb.d
+    networks:
+      - realworld-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U realworld"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API Node.js + Express + Prisma (utilise le Dockerfile original)
+  api:
+    build: 
+      context: ./node-express-realworld-example-app
+      dockerfile: Dockerfile
+    container_name: realworld-api
+    environment:
+      DATABASE_URL: "postgresql://realworld:realworld123@database:5432/realworld?schema=public"
+      JWT_SECRET: "your-super-secret-jwt-key-change-in-production"
+      NODE_ENV: "development"
+    ports:
+      - "3004:3000"  # Port 3004 externe (3001 pris par jsonserver)
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - realworld-network
+    # Script simplifié sans migrations pour tester
+    command: >
+      sh -c "
+        echo 'Starting API without migrations...' &&
+        npm start
+      "
+
+  # Frontend React + Redux
+  frontend:
+    build:
+      context: ./react-redux-realworld-example-app
+      dockerfile: Dockerfile
+    container_name: realworld-frontend
+    environment:
+      # Port personnalisé (évite conflit avec API)
+      PORT: 4100
+      # URL de l'API backend (communication interne entre containers)
+      REACT_APP_API_URL: "http://api:3000/api"
+    ports:
+      - "4100:4100"
+    volumes:
+      # Hot reload pour développement
+      - ./react-redux-realworld-example-app:/app
+      - /app/node_modules
+    depends_on:
+      - api
+    networks:
+      - realworld-network
+
+# Réseau isolé pour les services
+networks:
+  realworld-network:
+    driver: bridge
+
+# Volumes persistants
+volumes:
+  postgres_data:
+    driver: local
