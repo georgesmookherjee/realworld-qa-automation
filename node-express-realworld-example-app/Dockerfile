@@ -3,11 +3,9 @@ FROM node:lts
 
 WORKDIR /app
 
-# Copier les fichiers de dépendances
+# Copier les fichiers de dépendances et nettoyer
 COPY package*.json ./
-
-# Installer les dépendances
-RUN npm install
+RUN rm -rf node_modules package-lock.json && npm install && npm install --save-dev @types/node
 
 # Copier tout le code source
 COPY . .

@@ -44,7 +44,15 @@ services:
     # Script simplifié sans migrations pour tester
     command: >
       sh -c "
-        echo 'Starting API without migrations...' &&
+        echo 'Starting API with full setup...' &&
+        sleep 15 &&
+        echo 'Running Prisma generate...' &&
+        npx prisma generate &&
+        echo 'Running migrations...' &&
+        npx prisma migrate deploy &&
+        echo 'Running seed...' &&
+        npx prisma db seed &&
+        echo 'Starting server...' &&
         npm start
       "
 
@@ -58,7 +66,7 @@ services:
       # Port personnalisé (évite conflit avec API)
       PORT: 4100
       # URL de l'API backend (communication interne entre containers)
-      REACT_APP_API_URL: "http://api:3000/api"
+      REACT_APP_API_URL: "http://localhost:3004/api"
     ports:
       - "4100:4100"
     volumes:
