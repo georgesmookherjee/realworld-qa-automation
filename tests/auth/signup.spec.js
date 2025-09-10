@@ -11,7 +11,7 @@ test.describe('Authentification - Inscription', () => {
       password: 'SecurePass123!'
     };
 
-    await page.waitForTimeout(2000);
+    // await page.waitForTimeout(500);
 
     // Étape 1 : Ouvrir l'application (URL Docker)
     await page.goto('/'); // baseURL définie dans config
@@ -19,7 +19,7 @@ test.describe('Authentification - Inscription', () => {
     // Vérifier que la page d'accueil s'affiche
     await expect(page).toHaveTitle(/Conduit/);
 
-    await page.waitForTimeout(2000);
+    // await page.waitForTimeout(500);
     
     // Étape 2 : Cliquer sur "Sign up"
     await page.click('text=Sign up', { force: true });
@@ -70,7 +70,7 @@ test.describe('Authentification - Inscription', () => {
     await expect(page.locator('text=Sign up')).not.toBeVisible();
     
     // Vérifier que les liens authentifiés sont visibles
-    await expect(page.locator('text=New Article')).toBeVisible();
+    await expect(page.locator('text=New Post')).toBeVisible();
     await expect(page.locator('text=Settings')).toBeVisible();
   });
 

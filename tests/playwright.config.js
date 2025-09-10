@@ -29,7 +29,7 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
     
     // Timeouts réseau plus longs pour Docker
-    actionTimeout: 10000,
+    actionTimeout: 2000,
     navigationTimeout: 30000,
   },
 
@@ -47,7 +47,7 @@ export default defineConfig({
   
   // Attendre que les services soient prêts
   expect: {
-    timeout: 10000,
+    timeout: 3000,
   },
 
   // Rapports
