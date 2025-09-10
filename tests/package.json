@@ -1,0 +1,18 @@
+{
+  "name": "realworld-e2e-tests",
+  "version": "1.0.0",
+  "description": "Tests E2E pour l'application RealWorld",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "test:ui": "playwright test --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
+  },
+  "keywords": ["e2e", "tests", "playwright", "realworld"],
+  "author": "[Votre nom]"
+}

@@ -43,16 +43,10 @@ services:
       - realworld-network
     # Script simplifié sans migrations pour tester
     command: >
-      sh -c "
-        echo 'Starting API with full setup...' &&
-        sleep 15 &&
-        echo 'Running Prisma generate...' &&
-        npx prisma generate &&
-        echo 'Running migrations...' &&
-        npx prisma migrate deploy &&
-        echo 'Running seed...' &&
+      sh -c "      
+        echo 'Starting API...' &&
+        npx prisma migrate reset --force &&
         npx prisma db seed &&
-        echo 'Starting server...' &&
         npm start
       "
 
@@ -66,7 +60,7 @@ services:
       # Port personnalisé (évite conflit avec API)
       PORT: 4100
       # URL de l'API backend (communication interne entre containers)
-      REACT_APP_API_URL: "http://localhost:3004/api"
+      REACT_APP_API_URL: "/api"
     ports:
       - "4100:4100"
     volumes:
@@ -75,6 +69,55 @@ services:
       - /app/node_modules
     depends_on:
       - api
+    networks:
+      - realworld-network
+
+  # Tests E2E avec Playwright
+  e2e-tests:
+    image: mcr.microsoft.com/playwright:v1.55.0-jammy
+    container_name: realworld-e2e
+    working_dir: /tests
+    volumes:
+      # Monter vos tests depuis l'hôte
+      - ./tests:/tests
+      - ./test-results:/test-results
+      - ./playwright-report:/playwright-report
+    environment:
+      # URLs pour les tests (communication inter-conteneurs)
+      - BASE_URL=http://nginx:80
+      - REACT_APP_API_URL=http://api:3000/api
+    networks:
+      - realworld-network
+    depends_on:
+      - nginx  # Ajouter nginx comme dépendance
+      - frontend
+      - api
+    # N'exécute pas automatiquement, vous contrôlez l'exécution
+    profiles:
+      - tests
+    command: >
+      sh -c "
+        which npm &&
+        npm --version &&
+        node --version &&
+        npm install &&
+        echo 'Running E2E tests...' &&
+        wget --retry-connrefused --tries=10 -q http://frontend:4100/ &&
+        npx playwright test
+      "
+  nginx:
+    image: nginx:alpine
+    container_name: realworld-proxy
+    ports:
+      - "8082:80"
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+    depends_on:
+      - api
+      - frontend
     networks:
       - realworld-network
 
