@@ -52,10 +52,10 @@ export default defineConfig({
 
   // Rapports
   reporter: [
-    ['html', { outputFolder: '/playwright-report' }],
-    ['json', { outputFile: '/test-results/results.json' }],
+    ['html', { outputFolder: '../playwright-report' }],
+    ['json', { outputFile: '../test-results/results.json' }],
     ['list'] // Console output
   ],
 
-  outputDir: '/test-results',
+  outputDir: '../test-results',
 });
