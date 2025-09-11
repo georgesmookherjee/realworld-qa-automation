@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { expectURL } from '../utils/test-helpers.js';
 
 test.describe('Authentification - Connexion', () => {
   test('CT-006 - Connexion réussie avec identifiants valides', async ({ page }) => {
@@ -10,7 +11,7 @@ test.describe('Authentification - Connexion', () => {
 
     // Étape 1: Accéder à la page de connexion
     await page.goto('/login');
-    await expect(page).toHaveURL("http://nginx/login");
+    await expectURL(page, '/login');
 
     // Étape 2: Saisir l'email
     await page.fill('input[placeholder="Email"]', testUser.email);

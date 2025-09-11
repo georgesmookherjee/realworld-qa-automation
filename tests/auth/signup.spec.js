@@ -1,5 +1,6 @@
 // tests/auth/signup.spec.js
 import { test, expect } from '@playwright/test';
+import { expectURL } from '../utils/test-helpers.js';
 
 test.describe('Authentification - Inscription', () => {
 
@@ -52,7 +53,7 @@ test.describe('Authentification - Inscription', () => {
     expect(responseBody.user.token).toBeDefined();
 
     // Étape 8 : Vérifier la redirection vers page d'accueil
-    await expect(page).toHaveURL('http://nginx/');  // Pattern regex flexible
+    await expectURL(page, '/');  // Pattern regex flexible
 
     // Étape 9 : Vérifier que l'utilisateur est connecté (username dans header)
     await expect(page.locator('.nav-link').filter({ hasText: testUser.username })).toBeVisible();

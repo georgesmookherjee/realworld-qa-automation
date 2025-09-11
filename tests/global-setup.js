@@ -11,7 +11,7 @@ async function globalSetup() {
   console.log('✅ Tous les services sont prêts pour les tests E2E');
 }
 
-async function waitForService(url, serviceName, maxRetries = 30) {
+async function waitForService(url, serviceName, maxRetries = 10) {
   for (let i = 0; i < maxRetries; i++) {
     try {
       const response = await fetch(url);

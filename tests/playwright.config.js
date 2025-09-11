@@ -15,7 +15,7 @@ export default defineConfig({
   
   use: {
     // URL du frontend dans Docker (communication inter-conteneurs)
-    baseURL: process.env.BASE_URL || 'http://nginx:80',
+    baseURL: process.env.BASE_URL || 'http://localhost:8082',
     
     // Mode headless obligatoire dans conteneur
     headless: true,
