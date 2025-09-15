@@ -84,8 +84,8 @@ test.describe('Authentification - Inscription', () => {
     // Important : utilise un email créé par CT-001 ou créé manuellement
     const existingUser = {
       username: `newuser${Date.now()}`,        // Username différent
-      email: "admin@gmail.com",                // Email déjà existant (même que CT-006)
-      password: "ValidPass123!"
+      email: "admin@axample.com",                // Email déjà existant (même que CT-006)
+      password: "SecurePass123!"
     };
 
     // Étape 1: Naviguer vers la page d'inscription
@@ -143,7 +143,7 @@ test.describe('Authentification - Inscription', () => {
   test('CT-002 - Variante robuste avec retry', async ({ page }) => {
     const existingUser = {
       username: `testuser${Date.now()}`,
-      email: "admin@gmail.com",  // Email connu existant
+      email: "admin@axample.com",  // Email connu existant
       password: "TestPass456!"
     };
 

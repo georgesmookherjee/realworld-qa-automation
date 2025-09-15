@@ -5,8 +5,8 @@ test.describe('Authentification - Connexion', () => {
   test('CT-006 - Connexion réussie avec identifiants valides', async ({ page }) => {
     // Prérequis : utilisateur existant (créé via CT-001 ou manuellement)
     const testUser = {
-      email: "admin@gmail.com", 
-      password: "admin123"
+      email: "admin@axample.com", 
+      password: "SecurePass123!"
     };
 
     // Étape 1: Accéder à la page de connexion
@@ -59,8 +59,8 @@ test.describe('Authentification - Connexion', () => {
 
   test('CT-006 - Variante avec attente explicite', async ({ page }) => {
     const testUser = {
-      email: "admin@gmail.com",
-      password: "admin123"
+      email: "admin@axample.com",
+      password: "SecurePass123!"
     };
 
     await page.goto('/login');
