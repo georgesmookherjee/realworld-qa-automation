@@ -88,34 +88,34 @@ docker-compose up --build
 
 ```
 realworld-qa-automation/
-├── 📂 react-redux-realworld-example-app/     # Frontend React+Redux
-│   ├── src/                                  # Sources React
-│   ├── public/                              # Assets statiques
-│   └── Dockerfile                           # Container frontend
+├── 📂 react-redux-realworld-example-app/   # Frontend React+Redux
+│   ├── src/                                # Sources React
+│   ├── public/                             # Assets statiques
+│   └── Dockerfile                          # Container frontend
 │
-├── 📂 node-express-realworld-example-app/    # Backend Node.js
-│   ├── src/                                 # Sources API
+├── 📂 node-express-realworld-example-app/  # Backend Node.js
+│   ├── src/                                # Sources API
 │   ├── prisma/                             # Schema et migrations
 │   └── Dockerfile                          # Container backend
 │
 ├── 📂 tests/                               # Tests E2E Playwright (DÉVELOPPEMENT PRINCIPAL)
-│   ├── auth/                            # Tests d'authentification
-│   │   ├── CT001.signup.spec.js         # Inscription utilisateur
-│   │   ├── CT002.signup-duplicate.spec.js # Email déjà utilisé  
-│   │   └── CT006.login.spec.js          # Connexion réussie
-│   ├── utils/                           # Helpers et utilitaires
-│   ├── global-setup.js                  # Setup global des tests
-│   ├── playwright.config.js             # Configuration Playwright
-│   ├── package.json                     # Dependencies tests
-│   └── run-codegen.bat                  # Script génération tests
+│   ├── auth/                               # Tests d'authentification
+│   │   ├── CT001.signup.spec.js            # Inscription utilisateur
+│   │   ├── CT002.signup-duplicate.spec.js  # Email déjà utilisé  
+│   │   └── CT006.login.spec.js             # Connexion réussie
+│   ├── utils/                              # Helpers et utilitaires
+│   ├── global-setup.js                     # Setup global des tests
+│   ├── playwright.config.js                # Configuration Playwright
+│   ├── package.json                        # Dependencies tests
+│   └── run-codegen.bat                     # Script génération tests
 │
-├── 📂 documentation/                    # Documentation technique (COLLABORATION)
-│   ├── Cas de Test - RealWorld.md      # Spécifications détaillées CT-001 à CT-010
-│   ├── strategie_test_realworld.md     # Stratégie de test complète
-│   ├── scenarios_test_realworld.md     # Scénarios et matrices de test
-│   └── CdR - module authentification.md # Cahier des charges module auth
+├── 📂 documentation/                       # Documentation technique (COLLABORATION)
+│   ├── Cas de Test - RealWorld.md          # Spécifications détaillées CT-001 à CT-010
+│   ├── strategie_test_realworld.md         # Stratégie de test complète
+│   ├── scenarios_test_realworld.md         # Scénarios et matrices de test
+│   └── CdR - module authentification.md    # Cahier des charges module auth
 │
-├── 📂 node-v22.19.0-win-x64/             # Node.js portable (Windows)
+├── 📂 node-v22.19.0-win-x64/              # Node.js portable (Windows)
 ├── 🐳 docker-compose.yml                  # Orchestration services
 ├── 🌐 nginx.conf                          # Configuration proxy
 ├── 🔧 run-playwright.bat                  # Script tests E2E
